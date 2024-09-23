@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "3c44b4d0-787b-4dc4-8398-ae0c234a4097",
+		"name": "finaincial-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "592976",
+		"_collection_link": "https://ontomesh.postman.co/workspace/Team-Workspace~06200530-b999-4e8b-84c2-f6f8e881ae35/collection/592976-3c44b4d0-787b-4dc4-8398-ae0c234a4097?action=share&source=collection_link&creator=592976"
+	},
+	"item": [
+		{
+			"name": "account",
+			"item": [
+				{
+					"name": "create-account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Account Number Check\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"accountNumber\", jsonData.content.accountNumber);",
+									"});",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountHolderName\": \"Arun Kumar Kandakatla\",\n    \"accountType\": \"S\",\n    \"availableBalance\":  1000.0\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/accounts",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"accounts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update-account",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Account Number Check\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    // console.log(jsonData);",
+									"    pm.collectionVariables.set(\"accountNumber\", jsonData.body.accountNumber);",
+									"// pm.collectionVariables.set(\"variable_key\", \"variable_value\");",
+									"});",
+									"",
+									"// pm.environment.set(\"variable_key\", \"variable_value\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"accountHolderName\": \"Arun Kumar Kandakatla\",\n    \"accountType\": \"S\",\n    \"accountStatus\": \"I\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete-account",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"host": [
+								"localhost"
+							],
+							"port": "9090",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "transaction",
+			"item": []
+		}
+	],
+	"variable": [
+		{
+			"key": "accountNumber",
+			"value": ""
+		}
+	]
+}
