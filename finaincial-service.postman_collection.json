@@ -4,7 +4,7 @@
 		"name": "finaincial-service",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "592976",
-		"_collection_link": "https://ontomesh.postman.co/workspace/Team-Workspace~06200530-b999-4e8b-84c2-f6f8e881ae35/collection/592976-3c44b4d0-787b-4dc4-8398-ae0c234a4097?action=share&source=collection_link&creator=592976"
+		"_collection_link": "https://ontomesh.postman.co/workspace/06200530-b999-4e8b-84c2-f6f8e881ae35/collection/592976-3c44b4d0-787b-4dc4-8398-ae0c234a4097?action=share&source=collection_link&creator=592976"
 	},
 	"item": [
 		{
@@ -46,11 +46,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9090/api/v1/accounts",
+							"raw": "localhost:8085/api/v1/accounts",
 							"host": [
 								"localhost"
 							],
-							"port": "9090",
+							"port": "8085",
 							"path": [
 								"api",
 								"v1",
@@ -99,11 +99,11 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}",
 							"host": [
 								"localhost"
 							],
-							"port": "9090",
+							"port": "8085",
 							"path": [
 								"api",
 								"v1",
@@ -120,11 +120,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}",
 							"host": [
 								"localhost"
 							],
-							"port": "9090",
+							"port": "8085",
 							"path": [
 								"api",
 								"v1",
@@ -141,11 +141,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:9090/api/v1/accounts/{{accountNumber}}",
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}",
 							"host": [
 								"localhost"
 							],
-							"port": "9090",
+							"port": "8085",
 							"path": [
 								"api",
 								"v1",
@@ -160,7 +160,128 @@
 		},
 		{
 			"name": "transaction",
-			"item": []
+			"item": [
+				{
+					"name": "debit-transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionReference\": \"ref-1233\",\n    \"transactionType\": \"E\",\n    \"amount\": 3400,\n    \"remarks\": \"second debit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}/transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "credit-transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionReference\": \"ref-1233\",\n    \"transactionType\": \"I\",\n    \"amount\": 100,\n    \"remarks\": \"second credit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}/transactions",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list-transactions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"transactionReference\": \"ref-1233\",\n    \"transactionType\": \"I\",\n    \"amount\": 800,\n    \"remarks\": \"second credit\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8085/api/v1/accounts/{{accountNumber}}/transactions?type=I&page=0&pageSize=20",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"v1",
+								"accounts",
+								"{{accountNumber}}",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "I"
+								},
+								{
+									"key": "from",
+									"value": "2024-09-24",
+									"disabled": true
+								},
+								{
+									"key": "to",
+									"value": "2024-10-23",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "20"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"variable": [
