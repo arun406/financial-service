@@ -1,12 +1,62 @@
-version: '3'
+version: '3.7'
 
 services:
-  database:
-    container_name: "pg_database"
-    image: postgres
-    ports:
-      - '15432:5432'
+  postgres:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     environment:
-      - 'POSTGRES_USER=admin'
-      - 'POSTGRES_DB=findb'
-      - 'POSTGRES_PASSWORD=secret'
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    networks:
+      - finservice_network
+
+  app:
+    image: 'finservice:latest'
+    build:
+      context: .
+    container_name: app
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/${POSTGRES_DB}
+    #      - SPRING_DATASOURCE_USERNAME=$YOUR_USERNAME
+    #      - SPRING_DATASOURCE_PASSWORD=$YOUR_PASSWORD
+    #      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8085:8085"
+    networks:
+      - finservice_network
+#  keycloak:
+#    image: keycloak/keycloak:latest
+#    command: start
+#    environment:
+#      KC_HOSTNAME: localhost
+#      KC_HOSTNAME_PORT: 8080
+#      KC_HOSTNAME_STRICT_BACKCHANNEL: false
+#      KC_HTTP_ENABLED: true
+#      KC_HOSTNAME_STRICT_HTTPS: false
+#      KC_HEALTH_ENABLED: true
+#      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
+#      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+#      KC_DB: postgres
+#      KC_DB_URL: jdbc:postgresql://postgres/${POSTGRES_DB}
+#      KC_DB_USERNAME: ${POSTGRES_USER}
+#      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+#    ports:
+#      - 8080:8080
+#    restart: always
+#    depends_on:
+#      - postgres
+#    networks:
+#      - finservice_network
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  finservice_network:
+    driver: bridge
