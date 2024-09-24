@@ -1,10 +1,11 @@
 package com.nemetschek.accounting.transactions.service;
 
 import com.nemetschek.accounting.transactions.model.dto.TransactionDTO;
+import com.nemetschek.accounting.transactions.model.dto.TransactionsList;
 import com.nemetschek.accounting.transactions.model.type.TransactionType;
+import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface TransactionService {
 
@@ -19,12 +20,14 @@ public interface TransactionService {
     /**
      * list the transactions
      *
+     * @param pageable
      * @param from
      * @param to
      * @param accountNumber
      * @param type
      * @return
      */
-    List<TransactionDTO> listTransactions(LocalDate from, LocalDate to, String accountNumber, TransactionType type);
+    TransactionsList listTransactions(Pageable pageable, LocalDate from, LocalDate to, String accountNumber,
+                                      TransactionType type);
 
 }

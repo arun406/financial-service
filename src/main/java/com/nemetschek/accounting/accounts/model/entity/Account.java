@@ -15,6 +15,7 @@ import java.util.concurrent.locks.StampedLock;
 @Table(name = "ACCOUNT")
 public class Account {
 
+    @Transient
     private StampedLock lock = new StampedLock();
 
     @Id
@@ -102,7 +103,7 @@ public class Account {
         this.accountStatus = accountStatus;
     }
 
-    
+
     public void setAvailableBalance(BigDecimal availableBalance) {
         this.availableBalance = availableBalance;
     }

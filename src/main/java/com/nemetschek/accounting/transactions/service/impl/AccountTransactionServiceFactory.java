@@ -12,12 +12,22 @@ public class AccountTransactionServiceFactory {
 
     private static final Map<TransactionType, AccountTransactionService> serviceMap = new HashMap<>();
 
+    private final AccountWithdrawalService accountWithdrawalService;
+    private final AccountDepositService accountDepositService;
+
+    public AccountTransactionServiceFactory(AccountWithdrawalService accountWithdrawalService,
+                                            AccountDepositService accountDepositService) {
+        this.accountWithdrawalService = accountWithdrawalService;
+        this.accountDepositService = accountDepositService;
+        init();
+    }
+
     /**
      * Initialize the map by hard coding. This implementation can be changed using annotation scanning.
      */
-    static {
-        serviceMap.put(TransactionType.I, new AccountDepositService());
-        serviceMap.put(TransactionType.O, new AccountWithdrawalService());
+    private void init() {
+        serviceMap.put(TransactionType.I, accountDepositService);
+        serviceMap.put(TransactionType.O, accountWithdrawalService);
     }
 
     /**

@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  database:
+    container_name: "pg_database"
+    image: postgres
+    ports:
+      - '15432:5432'
+    environment:
+      - 'POSTGRES_USER=admin'
+      - 'POSTGRES_DB=findb'
+      - 'POSTGRES_PASSWORD=secret'

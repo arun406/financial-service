@@ -6,6 +6,7 @@ import com.nemetschek.accounting.accounts.model.repository.AccountRepository;
 import com.nemetschek.accounting.transactions.model.dto.TransactionDTO;
 import com.nemetschek.accounting.transactions.model.repository.TransactionRepository;
 import com.nemetschek.accounting.transactions.service.AccountTransactionService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +28,7 @@ public class AccountDepositService implements AccountTransactionService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    @Transactional
     @Override
     public boolean performTransaction(TransactionDTO dto) {
         long l = sl.writeLock();
@@ -36,7 +38,6 @@ public class AccountDepositService implements AccountTransactionService {
             if (account == null) {
                 throw new AccountNotFoundException("Invalid account.");
             }
-
             account.setAvailableBalance(account.getBalance().add(dto.amount()));
 
             this.accountRepository.save(account);
